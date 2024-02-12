@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="utf-8">
+  <title>Sofiaa</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <style>
+    .center-screen {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .message-container {
+      text-align: center;
+    }
+
+    .message {
+      opacity: 0;
+      transition: opacity 0.5s ease-in-out;
+      max-width: 400px;
+      margin: auto;
+    }
+
+    .message.show {
+      opacity: 1;
+    }
+
+    .panda-img {
+      max-width: 100%;
+      height: auto;
+      margin-top: 20px; /* Ajusta el espacio entre el mensaje y la imagen del panda */
+    }
+
+    .buttons {
+      margin-top: 20px;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="app" class="center-screen">
+    <div v-if="!showMessageText">
+      <h3 @click="changeText">{{ currentHeaderText }}</h3>
+      <button type="button" class="btn btn-success mr-2" :style="{ fontSize: yesButtonSize + 'rem' }" @click="showMessage">Acepto</button>
+      <button type="button" class="btn btn-danger" @click="changeText('noButton')">No deseo</button>
+    </div>
+
+    <div class="message-container" v-if="showMessageText">
+      <div class="message" :class="{ show: showMessageText }">
+        <p v-html="messageText"></p>
+        <img class="panda-img" src="WG8T.gif" alt="GIF del Panda">
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/vue@2"></script>
+  <script>
+    new Vue({
+      el: '#app',
+      data: {
+        headerText: [
+          'Sofia Tarazona, quieres ser mi cita de San Valentín?',
+          'Segura?',
+          'Como que no oe',
+          'Esta cosa no está programada para que te niegues',
+          'No hay regalo sino aceptas',
+          'Me comeré tus M&Ms',
+          'Secuestraré a Pepe',
+          'Ya acepta, por favor ;c',
+        ],
+        currentHeaderTextIndex: 0,
+        yesButtonSize: 1,
+        showMessageText: false,
+        messageText: '¡Gracias, sabía que aceptarías a la primera!<br>Te Quiero Muchooooooooooooooooooooooooooooo <3<br>Nos vemos el 19, te extraño demasiado',
+      },
+      methods: {
+        changeText() {
+          this.currentHeaderTextIndex = (this.currentHeaderTextIndex + 1) % this.headerText.length;
+          this.yesButtonSize += 5;
+          this.showMessageText = false; // Ocultar el mensaje y la imagen del panda después de cambiar el texto
+        },
+        showMessage() {
+          this.showMessageText = true;
+        },
+      },
+      computed: {
+        currentHeaderText() {
+          return this.headerText[this.currentHeaderTextIndex];
+        },
+      },
+    });
+  </script>
+</body>
+
+</html>
